@@ -183,8 +183,8 @@ namespace TodoMVC.Controllers
 
 
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteNote([FromQuery] int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteNote(int id)
         {
             Note note = await _noteContext.Note.FindAsync(id);
 

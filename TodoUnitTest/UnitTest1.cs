@@ -1,11 +1,12 @@
+using Microsoft.AspNetCore.Mvc;
+using TodoMVC.Controllers;
+using TodoMVC.Data;
+using TodoMVC.Models;
+
 namespace TodoUnitTest
 {
     public class UnitTest1
     {
-        [Fact]
-        public void Test1()
-        {
 
-        }
     }
 }

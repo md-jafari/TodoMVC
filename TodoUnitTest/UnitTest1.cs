@@ -8,6 +8,40 @@ namespace TodoUnitTest
 {
     public class NoteControllerTests
     {
+
+         [Fact]
+        public async Task DeleteNote_RemovesNoteFromDatabase()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<NoteContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var context = new NoteContext(options))
+            {
+                // Add a sample note to the database
+                var noteToAdd = new Note { Id = 1, Text = "Test Note", IsDone = false };
+                context.Note.Add(noteToAdd);
+                await context.SaveChangesAsync();
+            }
+
+            using (var context = new NoteContext(options))
+            {
+                var controller = new NoteController(context);
+
+                // Act
+                var result = await controller.DeleteNote(1);
+
+                // Assert
+                Assert.NotNull(result); // Ensure result is not null
+                Assert.IsType<OkResult>(result); // Ensure OkResult is returned
+
+                // Verify the note is removed from the database
+                var deletedNote = await context.Note.FindAsync(1);
+                Assert.Null(deletedNote); // Ensure the note is not found in the database
+            }
+        }
+
          [Fact]
         public async Task Post_AddsNoteToDatabase()
         {

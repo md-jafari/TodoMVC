@@ -5,6 +5,11 @@ namespace TodoMVC.Data
 {
     public class NoteContext: DbContext
     {
+        public NoteContext()
+        {
+
+        }
+
         public NoteContext(DbContextOptions<NoteContext> options) 
             : base(options) { }
 
